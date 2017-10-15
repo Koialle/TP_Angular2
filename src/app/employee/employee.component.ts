@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee/employee.service';
+import { SharedService } from '../services/shared/shared.service';
 
 @Component({
   selector: 'app-employee',
@@ -17,6 +18,7 @@ export class EmployeeComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
+    private sharedService: SharedService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location
@@ -25,6 +27,7 @@ export class EmployeeComponent implements OnInit {
   ngOnInit() {
     this.employee = new Employee();
     this.employee_id = +this.activatedRoute.snapshot.paramMap.get('employee_id');
+    this.error = "";
 
     if (this.employee_id > 0) {
       this.title = 'Modifier un employé';
@@ -46,6 +49,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   validateEmployee(id: number): void {
+    let originalUrl = this.sharedService.getOriginalUrl();
     if (id > 0) {
       if (isNaN(this.employee.job_id)) {
         this.error = 'Vous devez sélectionner un job !';
@@ -54,7 +58,7 @@ export class EmployeeComponent implements OnInit {
       } else {
         this.employeeService.updateEmployee(this.employee).subscribe(
           () => {
-            this.router.navigate(['/getEmployees']);
+            this.router.navigate([originalUrl]);
           },
           (error) => {
             this.error = error.message;
@@ -68,7 +72,7 @@ export class EmployeeComponent implements OnInit {
           this.error = error.message;
         },
         () => { // complete: finally
-          this.router.navigate(['/getEmployees']);
+          this.router.navigate([originalUrl]);
         }
       );
     }
@@ -88,5 +92,13 @@ export class EmployeeComponent implements OnInit {
 
   departmentSelected(department_id: number): void {
     this.employee.department_id = department_id;
+  }
+
+  jobError(error: string): void {
+    this.error += error;
+  }
+
+  departmentError(error: string): void {
+    this.error += error;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee/employee.service';
@@ -10,6 +10,7 @@ import { EmployeeService } from '../services/employee/employee.service';
 })
 export class EmpListComponent implements OnInit {
   public error: string;
+  @Output() reload = new EventEmitter();
   @Input() public employees: Employee[];
 
   constructor(
@@ -31,8 +32,7 @@ export class EmpListComponent implements OnInit {
         this.error = error.message;
       },
       () => {
-        //this.getEmployees();
-        this.router.navigate(['/home']);
+        this.reload.emit();
       }
     );
   }

@@ -10,7 +10,7 @@ import { Department } from '../models/department';
 export class DepartmentComponent implements OnInit {
   @Input() public department_id: number;
   @Output() onChoose = new EventEmitter();
-  public error: string;
+  @Output() onError = new EventEmitter();
   public departments: Department[];
 
   constructor(
@@ -27,15 +27,11 @@ export class DepartmentComponent implements OnInit {
         this.departments = departments;
       },
       (error) => {
-        this.error = error.message;
+        this.onError.emit(error.message);
       }
     );
   }
 
-  /**
-   *
-   * @param value
-   */
   onChange(value: string): void {
     this.department_id = +value;
     this.onChoose.emit(this.department_id);

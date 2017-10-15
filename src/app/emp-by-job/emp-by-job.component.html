@@ -2,7 +2,7 @@
   <h3 class="col-md-offset-2">{{title}}</h3>
   <form role="form" name="empByJobForm" class="form-horizontal">
     <div class="form-group">
-      <app-job [job_id]="job_id" (onChoose)="jobSelected($event)"></app-job>
+      <app-job [job_id]="job_id" (reload)="reload()" (onChoose)="jobSelected($event)" (onError)="jobError($event)"></app-job>
     </div>
     <app-error [error]="error"></app-error>
   </form>

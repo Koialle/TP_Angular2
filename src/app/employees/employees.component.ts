@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee/employee.service';
+import { SharedService } from '../services/shared/shared.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -16,6 +17,7 @@ export class EmployeesComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
+    private sharedService: SharedService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
@@ -31,6 +33,7 @@ export class EmployeesComponent implements OnInit {
 
   getEmployees(): void {
     this.title = "Liste de tous les employés"
+    this.sharedService.setOriginalUrl('/getEmployees/byJob')
     this.employeeService.getEmployees().subscribe(
       (employees) => {
         this.employees = employees;
@@ -43,6 +46,7 @@ export class EmployeesComponent implements OnInit {
 
   getEmployeesByJob(job_id: number): void {
     this.title = "Liste des employés d'un Job"
+    this.sharedService.setOriginalUrl('/getEmployees/byJob/' + this.job_id)
     this.employeeService.getEmployeesByJob(job_id).subscribe(
       (employees) => {
         this.employees = employees;
@@ -51,5 +55,13 @@ export class EmployeesComponent implements OnInit {
         this.error = error;
       }
     )
+  }
+
+  reload(): void {
+    if (this.job_id > 0) {
+      this.getEmployeesByJob(this.job_id);
+    } else {
+      this.getEmployees();
+    }
   }
 }

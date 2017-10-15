@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="form-group">
-      <app-job [job_id]="employee.job_id" (onChoose)="jobSelected($event)"></app-job>
+      <app-job [job_id]="employee.job_id" (onChoose)="jobSelected($event)" (onError)="jobError($event)"></app-job>
     </div>
     <div class="form-group">
       <label class="col-sm-3  col-md-2 control-label">Date embauche : </label>
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="form-group">
-      <app-department [department_id]="employee.department_id" (onChoose)="departmentSelected($event)"></app-department>
+      <app-department [department_id]="employee.department_id" (onChoose)="departmentSelected($event)" (onError)="departmentError($event)"></app-department>
     </div>
     <div class="form-group">
       <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee/employee.service';
+import { SharedService } from '../services/shared/shared.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -16,6 +17,7 @@ export class EmpByDepComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
+    private sharedService: SharedService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
@@ -30,6 +32,7 @@ export class EmpByDepComponent implements OnInit {
 
   getEmployeesByDep(department_id: number): void {
     this.department_id = department_id;
+    this.sharedService.setOriginalUrl('/getEmployees/byDep/' + this.department_id);
     this.employeeService.getEmployeesByDep(department_id).subscribe(
       (employees) => {
         this.employees = employees;
@@ -42,5 +45,13 @@ export class EmpByDepComponent implements OnInit {
 
   departmentSelected(department_id: number): void {
     this.getEmployeesByDep(department_id);
+  }
+
+  reload(): void {
+    this.getEmployeesByDep(this.department_id);
+  }
+
+  departmentError(error: string): void {
+    this.error = error;
   }
 }

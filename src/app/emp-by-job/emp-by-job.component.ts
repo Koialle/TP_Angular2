@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class EmpByJobComponent implements OnInit {
   public title: string;
   public job_id: number;
+  public error: string;
 
   constructor(
     private router: Router,
@@ -21,5 +22,13 @@ export class EmpByJobComponent implements OnInit {
   jobSelected(job_id: number): void {
     this.job_id = job_id;
     this.router.navigate(['/getEmployees/byJob/' + job_id]);
+  }
+
+  reload(): void {
+    this.router.navigate(['/getEmployees/byJob/' + this.job_id]);
+  }
+
+  jobError(error: string): void {
+    this.error = error;
   }
 }

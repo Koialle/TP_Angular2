@@ -10,7 +10,7 @@ import { Job } from '../models/job';
 export class JobComponent implements OnInit {
   @Input() public job_id: number;
   @Output() onChoose = new EventEmitter();
-  public error: string;
+  @Output() onError = new EventEmitter();
   public jobs: Job[];
 
   constructor(
@@ -27,7 +27,7 @@ export class JobComponent implements OnInit {
         this.jobs = jobs;
       },
       (error) => {
-        this.error = error.message;
+        this.onError.emit(error.message);
       }
     );
   }

@@ -2,11 +2,11 @@
   <h2 class="col-md-offset-2">{{title}}</h2>
   <form role="form" name="empByDepForm" class="form-horizontal">
     <div class="form-group">
-      <app-department [department_id]="department_id" (onChoose)="departmentSelected($event)"></app-department>
+      <app-department [department_id]="department_id" (onChoose)="departmentSelected($event)" (onError)="departmentError($event)"></app-department>
     </div>
   </form>
   <div *ngIf="department_id > 0">
-    <app-emp-list [employees]="employees"></app-emp-list>
+    <app-emp-list [employees]="employees" (reload)="reload()"></app-emp-list>
   </div>
   <app-error [error]="error"></app-error>
 </div>
