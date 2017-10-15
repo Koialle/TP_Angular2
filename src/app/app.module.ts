@@ -25,6 +25,9 @@ import { EmpByJobComponent } from './emp-by-job/emp-by-job.component';
 import { EmpListComponent } from './emp-list/emp-list.component';
 import { EmpByDepComponent } from './emp-by-dep/emp-by-dep.component';
 
+// Guards
+import { AuthGuard } from './guards/auth.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +53,8 @@ import { EmpByDepComponent } from './emp-by-dep/emp-by-dep.component';
     SharedService,
     LoginService,
     EmployeeService,
-    CommonService
+    CommonService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
