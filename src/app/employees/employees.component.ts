@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../models/employee';
 import { EmployeeService } from '../services/employee/employee.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-employees',
@@ -9,20 +9,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
-  public title = 'Liste de tous les employés';
+  public title: string;
   public employees: Employee[];
   public error: string;
+  public job_id: number;
 
   constructor(
     private employeeService: EmployeeService,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.getEmployees();
+    this.job_id = +this.activatedRoute.snapshot.paramMap.get('job_id');
+    if (this.job_id > 0) {
+      this.getEmployeesByJob(this.job_id);
+    } else {
+      this.getEmployees();
+    }
   }
 
   getEmployees(): void {
+    this.title = "Liste de tous les employés"
     this.employeeService.getEmployees().subscribe(
       (employees) => {
         this.employees = employees;
@@ -33,19 +41,15 @@ export class EmployeesComponent implements OnInit {
     );
   }
 
-  detail(employee_id: number): void {
-    this.router.navigate(['/detailEmployee/' + employee_id]);
-  }
-
-  delete(employee_id: number): void {
-    this.employeeService.deleteEmployee(employee_id).subscribe(
-      () => {},
-      (error) => {
-        this.error = error.message;
+  getEmployeesByJob(job_id: number): void {
+    this.title = "Liste des employés d'un Job"
+    this.employeeService.getEmployeesByJob(job_id).subscribe(
+      (employees) => {
+        this.employees = employees;
       },
-      () => {
-        this.getEmployees();
+      (error) => {
+        this.error = error;
       }
-    );
+    )
   }
 }

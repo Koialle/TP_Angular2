@@ -13,6 +13,14 @@ export class EmployeeService {
     return this.httpClient.get(this.employeeSrvUrl + 'getEmployees');
   }
 
+  getEmployeesByJob(job_id: number): Observable<any> {
+    return this.httpClient.get(this.employeeSrvUrl + 'getEmployeesByJob/' + job_id);
+  }
+
+  getEmployeesByDep(department_id: number): Observable<any> {
+    return this.httpClient.get(this.employeeSrvUrl + 'getEmployeesByDep/' + department_id);
+  }
+
   getEmployee(id: number): Observable<any> {
     return this.httpClient.get(this.employeeSrvUrl + 'getEmployee/' + id);
   }

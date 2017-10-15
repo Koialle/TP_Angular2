@@ -21,6 +21,9 @@ import { CommonService } from './services/common/common.service';
 import { ErrorComponent } from './error/error.component';
 import { JobComponent } from './job/job.component';
 import { DepartmentComponent } from './department/department.component';
+import { EmpByJobComponent } from './emp-by-job/emp-by-job.component';
+import { EmpListComponent } from './emp-list/emp-list.component';
+import { EmpByDepComponent } from './emp-by-dep/emp-by-dep.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { DepartmentComponent } from './department/department.component';
     EmployeeComponent,
     ErrorComponent,
     JobComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    EmpByJobComponent,
+    EmpListComponent,
+    EmpByDepComponent
   ],
   imports: [
     BrowserModule,
